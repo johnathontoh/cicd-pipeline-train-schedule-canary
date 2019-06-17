@@ -8,9 +8,9 @@ spec:
     app: train-schedule
     track: canary
   ports:
-  -protocol: TCP
-   port: 8080
-   nodePort: 8081
+  - protocol: TCP
+    port: 8080
+    nodePort: 8081
   
 ---
   
