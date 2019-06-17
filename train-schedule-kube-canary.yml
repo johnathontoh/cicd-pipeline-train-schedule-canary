@@ -1,37 +1,37 @@
 kind: Service
 apiVersion: v1
-metadata: 
+metadata:
   name: train-schedule-service-canary
-spec: 
+spec:
   type: NodePort
-  selector: 
+  selector:
     app: train-schedule
     track: canary
   ports:
   - protocol: TCP
     port: 8080
     nodePort: 8081
-  
+
 ---
-  
-apiVersion: apps/v1
+
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: train-schedule-deployment-canary
   labels:
     app: train-schedule
-spec: 
+spec:
   replicas: $CANARY_REPLICAS
-  selector: 
-    matchlabels: 
-    app: train-schedule
-    track: canary
+  selector:
+    matchLabels:
+      app: train-schedule
+      track: canary
   template:
     metadata:
       labels:
         app: train-schedule
         track: canary
-    spec: 
+    spec:
       containers:
       - name: train-schedule
         image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
@@ -47,4 +47,3 @@ spec:
         resources:
           requests:
             cpu: 200m
-
